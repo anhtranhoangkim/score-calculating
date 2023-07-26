@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bao nhiêu thì được A?</title>
+</head>
+<body>
+    <!-- he so 1 4 5 -->
+    <label for="">Dùng cho NEU với hệ số 1 4 5</label>
+    <form id="form1"> 
+        <input type="number" step="0.01" name="" id="neu_score_1">
+        <input type="number" step="0.01" name="" id="neu_score_4">
+        
+        <button type="submit">Calculate</button>
+        
+        <textarea name="" id="result1" cols="30" rows="5"></textarea>
+    </form>
+
+    <!-- he so 4 6 -->
+    <label for="">Dùng cho VNU với hệ số 4 6</label>
+    <form id="form2">
+        <input type="number" step="0.01" name="" id="vnu_score_4">
+        
+        <button type="submit">Calculate</button>
+        
+        <textarea name="" id="result2" cols="30" rows="5"></textarea>
+    </form>
+
+    <script>
+        // Hàm tính giá trị và hiển thị kết quả trong textarea
+        function calculateAndDisplayResult(event, formula, resultId) {
+            event.preventDefault(); // Ngăn chặn việc submit form
+
+            const inputElement = event.target.elements[0];
+            const inputValue = parseFloat(inputElement.value);
+            const result = (formula(inputValue)).toFixed(2);
+
+            document.getElementById(resultId).value = result;
+        }
+
+        // Công thức tính toán cho form đầu tiên: =(9-0.1*input.neu_score_1-0.4*input.neu_score_4)/0.5
+        function formula1(inputValue) {
+            return (9 - 0.1 * inputValue - 0.4 * parseFloat(document.getElementById('neu_score_4').value)) / 0.5;
+        }
+
+        // Công thức tính toán cho form thứ hai: =(9-0.4*input.vnu_score_4)/0.6
+        function formula2(inputValue) {
+            return (9 - 0.4 * inputValue) / 0.6;
+        }
+
+        // Xử lý sự kiện submit của form 1
+        document.getElementById('form1').addEventListener('submit', function(event) {
+            calculateAndDisplayResult(event, formula1, 'result1');
+        });
+
+        // Xử lý sự kiện submit của form 2
+        document.getElementById('form2').addEventListener('submit', function(event) {
+            calculateAndDisplayResult(event, formula2, 'result2');
+        });
+    </script>
+</body>
+</html>
